@@ -1,3 +1,5 @@
+## 简介
+基于OpenGL、stbImage、miniAudio库制作的2D图形渲染库
 ## 构建库文件
 运行**build.bat**即可，.lib会自动放在/lib中。
 ## 链接库文件
