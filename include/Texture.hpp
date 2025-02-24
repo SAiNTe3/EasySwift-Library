@@ -1,5 +1,4 @@
 #pragma once
-#pragma comment(lib, "opengl32.lib")
 #include<iostream>
 #include"glad/glad.h"
 #include"GLFW/glfw3.h"

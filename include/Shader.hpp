@@ -1,5 +1,4 @@
 #pragma once
-#pragma comment(lib, "opengl32.lib")
 #include<iostream>
 #include<string>
 #include<fstream>
