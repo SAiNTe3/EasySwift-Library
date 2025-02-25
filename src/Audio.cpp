@@ -1,3 +1,4 @@
+#define MINIAUDIO_IMPLEMENTATION
 #include "../include/Audio.hpp"
 
 Audio::Audio() = default;

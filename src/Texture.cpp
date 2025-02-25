@@ -1,6 +1,6 @@
 #include "../include/Texture.hpp"
 #define STB_IMAGE_IMPLEMENTATION
-#include"../include/stbImage/stb_image.h"
+#include "../include/stbImage/stb_image.h"
 Texture::Texture(const char *path)
 {
 	glGenTextures(1, &m_Texture);
@@ -14,7 +14,19 @@ Texture::Texture(const char *path)
 	uchar *data = stbi_load(path, &m_Width, &m_Height, &m_Channel, 0);
 	if (data)
 	{
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, m_Width, m_Height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+		switch (m_Channel)
+		{
+		case 3:
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, m_Width, m_Height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+			break;
+		case 4:
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_Width, m_Height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+			break;
+		default:
+			std::cout << "Unsupported format!" << std::endl;
+			stbi_image_free(data);
+			return;
+		}
 		glGenerateMipmap(GL_TEXTURE_2D);
 	}
 	else
@@ -22,6 +34,10 @@ Texture::Texture(const char *path)
 		std::cout << "Failed to load texture" << std::endl;
 	}
 	stbi_image_free(data);
+}
+Texture::Size Texture::getSize()
+{
+	return Size(m_Width, m_Height);
 }
 void Texture::bind()
 {

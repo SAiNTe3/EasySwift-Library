@@ -11,6 +11,7 @@ Window::Window(uint width, uint height, const char *title, bool visiable, bool r
         glfwTerminate();
     }
     glfwMakeContextCurrent(m_Window);
+    glfwSetWindowUserPointer(m_Window, this);
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
         std::cout << "Failed to initialize GLAD" << std::endl;
@@ -22,6 +23,8 @@ Window::Window(uint width, uint height, const char *title, bool visiable, bool r
         {
             glViewport(0, 0, width, height);
         });
+    glfwSetKeyCallback(m_Window, KeyEventCallback);
+    glfwSetMouseButtonCallback(m_Window, MouseEventCallback);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
@@ -53,6 +56,40 @@ void Window::clear()
     glfwMakeContextCurrent(m_Window);
     glClearColor(r, g, b, a);
     glClear(GL_COLOR_BUFFER_BIT);
+}
+void Window::pollEvents()
+{
+    glfwPollEvents();
+}
+glm::dvec2 Window::getCursorPosition()
+{
+    glm::dvec2 pos;
+    glfwGetCursorPos(m_Window, &pos.x, &pos.y);
+    return pos;
+}
+bool Window::isKeyPressed(int key)
+{
+    return m_Keyboard.getKeyState(key) == Keyboard::KeyState::PRESS;
+}
+bool Window::isKeyReleased(int key)
+{
+    return m_Keyboard.getKeyState(key) == Keyboard::KeyState::RELEASE;
+}
+bool Window::isMousePressed(int button)
+{
+    return m_Mouse.getMouseState(button) == Mouse::MouseState::PRESS;
+}
+bool Window::isMouseReleased(int button)
+{
+    return m_Mouse.getMouseState(button) == Mouse::MouseState::RELEASE;
+}
+Keyboard::KeyState Window::getKeyState(int key)
+{
+    return m_Keyboard.getKeyState(key);
+}
+Mouse::MouseState Window::getMouseState(int button)
+{
+    return m_Mouse.getMouseState(button);
 }
 void Window::showWindow()
 {
@@ -132,7 +169,7 @@ void Window::setVSync(bool value)
         m_TimePerFrame = 0;
     }
 }
-void Window::setFramerate(double framerate)
+void Window::setFramerateLimit(double framerate)
 {
     if (framerate <= 0)
         return;
@@ -159,4 +196,28 @@ void Window::Initialize(int major, int minor)
 void Window::Terminate()
 {
     glfwTerminate();
+}
+void Window::KeyEventCallback(GLFWwindow *window, int key, int scancode, int action, int modes)
+{
+    Window *instance = static_cast<Window *>(glfwGetWindowUserPointer(window));
+    if (action == GLFW_PRESS)
+    {
+        instance->m_Keyboard.setKeyState(key, Keyboard::KeyState::PRESS);
+    }
+    else if (action == GLFW_RELEASE)
+    {
+        instance->m_Keyboard.setKeyState(key, Keyboard::KeyState::RELEASE);
+    }
+}
+void Window::MouseEventCallback(GLFWwindow *window, int button, int action, int mods)
+{
+    Window *instance = static_cast<Window *>(glfwGetWindowUserPointer(window));
+    if (action == GLFW_PRESS)
+    {
+        instance->m_Mouse.setMouseState(button, Mouse::MouseState::PRESS);
+    }
+    else if (action == GLFW_RELEASE)
+    {
+        instance->m_Mouse.setMouseState(button, Mouse::MouseState::RELEASE);
+    }
 }

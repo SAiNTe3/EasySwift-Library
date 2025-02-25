@@ -2,12 +2,13 @@
 
 int main()
 {
-    Window::Initialize(4, 6);
-    Window window(800, 600, "Demo Window");
-    while (window.isOpen())
-    {
-        window.clear();
-        window.display();
-    }
-    Window::Terminate();
+	Window::Initialize(4, 6);
+	Window window(800, 450, "DemoWindow", true, true);
+	while (window.isOpen())
+	{
+		window.pollEvents();
+		window.clear();
+		window.display();
+	}
+	Window::Terminate();
 }
