@@ -52,4 +52,8 @@ int main()
 	}
 	Window::Terminate();
 }
+<<<<<<< HEAD
 ```
+=======
+```
+>>>>>>> 476624a93055e1b0301f17c4c6a993db6861f59b
