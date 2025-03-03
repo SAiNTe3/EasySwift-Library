@@ -2,7 +2,7 @@
 #include<iostream>
 #include"glad/glad.h"
 #include"GLFW/glfw3.h"
-#include"stbImage/stb_image.h"
+#include "../include/stbImage/stb_image.h"
 typedef unsigned int uint;
 typedef unsigned char uchar;
 class Texture {

@@ -1,6 +1,7 @@
-#include "../include/Texture.hpp"
 #define STB_IMAGE_IMPLEMENTATION
-#include "../include/stbImage/stb_image.h"
+#include "../include/Texture.hpp"
+
+
 Texture::Texture(const char *path)
 {
 	glGenTextures(1, &m_Texture);

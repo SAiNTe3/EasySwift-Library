@@ -2,7 +2,7 @@
 
 ## 概述
 
-Multimedia-Library 是一个基于 OpenGL、stbImage 和 miniAudio 库制作的 2D 图形渲染库。它提供了方便的接口，使得开发者能够轻松地在应用程序中实现图形渲染和音频播放功能。
+Multimedia-Library 是基于 OpenGL、stbImage 和 miniAudio 库制作的 2D 图形渲染库。该库提供了方便的接口，使得开发者能够轻松地在应用程序中实现图形渲染和音频播放功能。
 
 ## 主要特性
 
@@ -23,19 +23,7 @@ Multimedia-Library 是一个基于 OpenGL、stbImage 和 miniAudio 库制作的 
    g++ <源文件>.cpp -o <可执行文件> -lmultimedia -lglfw3 -lopengl32 -lgdi32 -lglad -L<库文件路径>
    ```
 
-   其中，`<源文件>.cpp` 是你的源文件，`<可执行文件>` 是你想要生成的可执行文件名，`<库文件路径>` 是 `.lib` 文件所在的路径。
-
-### 依赖项
-
-- OpenGL：用于图形渲染。
-- stbImage：用于图像加载。
-- miniAudio：用于音频播放。
-- glfw3：用于创建窗口和处理输入（可选，但通常用于 OpenGL 项目中）。
-- glad：用于加载 OpenGL 函数指针（可选，但通常用于 OpenGL 项目中）。
-
 ## 代码示例
-
-以下是一个简单的代码示例，展示了如何使用 Multimedia-Library 库进行图形渲染和音频播放：
 
 ```cpp
 #include "include/Window.hpp"
@@ -52,8 +40,4 @@ int main()
 	}
 	Window::Terminate();
 }
-<<<<<<< HEAD
 ```
-=======
-```
->>>>>>> 476624a93055e1b0301f17c4c6a993db6861f59b

@@ -9,6 +9,7 @@
 #include "Sprite.hpp"
 #include "Keyboard.hpp"
 #include "Mouse.hpp"
+#include "Cursor.hpp"
 #include <chrono>
 #include <thread>
 typedef unsigned int uint;
@@ -26,10 +27,14 @@ class Window
     double m_TimePerFrame = 0;
     Keyboard m_Keyboard;
     Mouse m_Mouse;
+    Cursor m_Cursor;
     static void KeyEventCallback(GLFWwindow *window, int key, int scancode, int action, int modes);
     static void MouseEventCallback(GLFWwindow *window, int button, int action, int mods);
 
+
 public:
+    static void Initialize(int major, int minor);
+    static void Terminate();
     Window(uint width, uint height, const char *title, bool visiable = true, bool resizeable = true);
     ~Window();
     bool isOpen();
@@ -43,7 +48,7 @@ public:
     void setWindowSize(int width, int height);
     void getWindowSize(int &width, int &height);
     glm::vec2 getWindowSize();
-    glm::dvec2 getCursorPosition();
+	glm::dvec2 getCursorPosition();//获取鼠标位置
     bool isKeyPressed(int key);
     bool isKeyReleased(int key);
     bool isMousePressed(int button);
@@ -60,8 +65,10 @@ public:
     void setVSync(bool value);
     void setFramerateLimit(double framerate);
     void draw(Sprite &sprite);
-
-public:
-    static void Initialize(int major, int minor);
-    static void Terminate();
+    //Update v1.1.2
+	//Set cursor's properties
+	void setCursorStyle(Cursor::Style style);
+	void setCursorIcon(const char* iconPath);
+	void setCursorState(Cursor::State state);
+    void setWindowIcon(const char* iconPath);
 };
