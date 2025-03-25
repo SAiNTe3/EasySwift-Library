@@ -139,6 +139,3 @@ struct Keyboard
     KeyState getKeyState(int key);
     void setKeyState(int key, KeyState state);
 };
-
-#define KeyPressed Keyboard::KeyState::PRESS
-#define KeyReleased Keyboard::KeyState::RELEASE

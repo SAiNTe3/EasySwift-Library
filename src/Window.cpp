@@ -59,9 +59,10 @@ void Window::clear()
 	glClearColor(r, g, b, a);
 	glClear(GL_COLOR_BUFFER_BIT);
 }
-void Window::pollEvents()
+void Window::pollEvents(Event& e)
 {
-	glfwPollEvents();
+	m_Event.processEvent();
+	e = m_Event;
 }
 glm::dvec2 Window::getCursorPosition()
 {
@@ -69,30 +70,8 @@ glm::dvec2 Window::getCursorPosition()
 	glfwGetCursorPos(m_Window, &pos.x, &pos.y);
 	return pos;
 }
-bool Window::isKeyPressed(int key)
-{
-	return m_Keyboard.getKeyState(key) == Keyboard::KeyState::PRESS;
-}
-bool Window::isKeyReleased(int key)
-{
-	return m_Keyboard.getKeyState(key) == Keyboard::KeyState::RELEASE;
-}
-bool Window::isMousePressed(int button)
-{
-	return m_Mouse.getMouseState(button) == Mouse::MouseState::PRESS;
-}
-bool Window::isMouseReleased(int button)
-{
-	return m_Mouse.getMouseState(button) == Mouse::MouseState::RELEASE;
-}
-Keyboard::KeyState Window::getKeyState(int key)
-{
-	return m_Keyboard.getKeyState(key);
-}
-Mouse::MouseState Window::getMouseState(int button)
-{
-	return m_Mouse.getMouseState(button);
-}
+
+
 void Window::showWindow()
 {
 	glfwShowWindow(this->m_Window);
@@ -205,11 +184,11 @@ void Window::KeyEventCallback(GLFWwindow* window, int key, int scancode, int act
 	Window* instance = static_cast<Window*>(glfwGetWindowUserPointer(window));
 	if (action == GLFW_PRESS)
 	{
-		instance->m_Keyboard.setKeyState(key, Keyboard::KeyState::PRESS);
+		instance->m_Event.getKeyboard().setKeyState(key, Keyboard::KeyState::PRESS);
 	}
 	else if (action == GLFW_RELEASE)
 	{
-		instance->m_Keyboard.setKeyState(key, Keyboard::KeyState::RELEASE);
+		instance->m_Event.getKeyboard().setKeyState(key, Keyboard::KeyState::RELEASE);
 	}
 }
 void Window::MouseEventCallback(GLFWwindow* window, int button, int action, int mods)
@@ -217,11 +196,11 @@ void Window::MouseEventCallback(GLFWwindow* window, int button, int action, int 
 	Window* instance = static_cast<Window*>(glfwGetWindowUserPointer(window));
 	if (action == GLFW_PRESS)
 	{
-		instance->m_Mouse.setMouseState(button, Mouse::MouseState::PRESS);
+		instance->m_Event.getMouse().setMouseState(button, Mouse::MouseState::PRESS);
 	}
 	else if (action == GLFW_RELEASE)
 	{
-		instance->m_Mouse.setMouseState(button, Mouse::MouseState::RELEASE);
+		instance->m_Event.getMouse().setMouseState(button, Mouse::MouseState::RELEASE);
 	}
 }
 

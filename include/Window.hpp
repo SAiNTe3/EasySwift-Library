@@ -7,9 +7,8 @@
 #define GLFW_EXPOSE_NATIVE_WIN32
 #include "GLFW/glfw3native.h"
 #include "Sprite.hpp"
-#include "Keyboard.hpp"
-#include "Mouse.hpp"
 #include "Cursor.hpp"
+#include "Event.hpp"
 #include <chrono>
 #include <thread>
 typedef unsigned int uint;
@@ -25,8 +24,7 @@ class Window
     bool m_Vsync = true;
     double m_LastFrameTime = 0;
     double m_TimePerFrame = 0;
-    Keyboard m_Keyboard;
-    Mouse m_Mouse;
+    Event m_Event;
     Cursor m_Cursor;
     static void KeyEventCallback(GLFWwindow *window, int key, int scancode, int action, int modes);
     static void MouseEventCallback(GLFWwindow *window, int button, int action, int mods);
@@ -40,7 +38,7 @@ public:
     bool isOpen();
     void display();
     void clear();
-    void pollEvents();
+    void pollEvents(Event& e);
     void showWindow();
     void hideWindow();
     void setBackgroundColor(float r, float g, float b, float a);
@@ -48,13 +46,7 @@ public:
     void setWindowSize(int width, int height);
     void getWindowSize(int &width, int &height);
     glm::vec2 getWindowSize();
-	glm::dvec2 getCursorPosition();//获取鼠标位置
-    bool isKeyPressed(int key);
-    bool isKeyReleased(int key);
-    bool isMousePressed(int button);
-    bool isMouseReleased(int button);
-    Keyboard::KeyState getKeyState(int key);
-    Mouse::MouseState getMouseState(int button);
+	glm::dvec2 getCursorPosition();
     void setWindowPosition(int x, int y);
     void getWindowPosition(int &x, int &y);
     glm::vec2 getWindowPosition();

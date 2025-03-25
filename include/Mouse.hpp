@@ -28,6 +28,3 @@ struct Mouse
     MouseState getMouseState(int key);
     void setMouseState(int key, MouseState state);
 };
-
-#define MousePressed Mouse::MouseState::PRESS
-#define MouseReleased Mouse::MouseState::RELEASE

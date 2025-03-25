@@ -1,29 +1,29 @@
-# Multimedia-Library 库介绍
+# EasySwift Library
 
-## 概述
+## Overview
 
-Multimedia-Library 是基于 OpenGL、stbImage 和 miniAudio 库制作的 2D 图形渲染库。该库提供了方便的接口，使得开发者能够轻松地在应用程序中实现图形渲染和音频播放功能。
+EasySwift Library is a 2D graphics rendering library based on OpenGL, stbImage, and miniAudio libraries. This library provides convenient interfaces that enable developers to easily implement graphics rendering and audio playback functions in their applications.
 
-## 主要特性
+## Features
 
-- **图形渲染**：利用 OpenGL 的强大功能，实现高效的 2D 图形渲染。
-- **图像加载**：通过集成 stbImage 库，能够轻松加载各种常见的图像格式（如 PNG、JPG 等）。
-- **音频播放**：借助 miniAudio 库，实现跨平台的音频播放功能。
-- **易用性**：提供简洁明了的 API 接口，方便开发者集成和使用。
+- **Graphics rendering**: Use the power of OpenGL to achieve efficient 2D graphics rendering.
+- **Image loading**: By integrating the stbImage library, you can easily load various common image formats (such as PNG, JPG, etc.).
+- **Audio playback**: With the help of the miniAudio library, cross-platform audio playback function is realized.
+- **Ease of use**: Provides a concise and clear API interface for developers to integrate and use easily.
 
-## 使用方法
+## Usage
 
-### 编译与运行
+### Compile and Run
 
-1. **下载源码**：从 GitHub 仓库 [SAiNTe3/Multimedia-Library](https://github.com/SAiNTe3/Multimedia-Library) 下载源码。
-2. **编译库文件**：运行 `build.bat` 脚本，编译生成的 `.lib` 文件会自动放置在 `/lib` 目录中。
-3. **编译项目**：如果使用命令行编译项目，需要加上依赖项并指定库文件路径。例如：
+1. **Download source code**: Download source code from GitHub repository [SAiNTe3/EasySwift-Library](https://github.com/SAiNTe3/EasySwift-Library).
+2. **Compile library files**: Run the `build.bat` script, and the compiled `.lib` files will be automatically placed in the `/lib` directory.
+3. **Compile project**: If you use the command line to compile the project, you need to add dependencies and specify the library file path. For example:
 
-   ```bash
-   g++ <源文件>.cpp -o <可执行文件> -lmultimedia -lglfw3 -lopengl32 -lgdi32 -lglad -L<库文件路径>
-   ```
+```bash
+g++ <source file>.cpp -o <executable file> -lmultimedia -lglfw3 -lopengl32 -lgdi32 -lglad -L<library file path>
+```
 
-## 代码示例
+## Code Example
 
 ```cpp
 #include "include/Window.hpp"
