@@ -32,7 +32,7 @@ Texture::Texture(const char *path)
 	}
 	else
 	{
-		std::cout << "Failed to load texture" << std::endl;
+		std::cout << "Failed to load texture:" << stbi_failure_reason() << std::endl;
 	}
 	stbi_image_free(data);
 }

@@ -7,19 +7,19 @@ class Event
 {
 	Mouse m_Mouse;
 	Keyboard m_Keyboard;
+	friend class Window;
 public:
 	Event() = default;
 	~Event();
-	/// <summary>
-	/// Warning: Do not call this method proactively!
-	/// </summary>
-	void processEvent();
+
 	bool isKeyPressed(int key);
 	bool isKeyReleased(int key);
 	bool isMousePressed(int button);
 	bool isMouseReleased(int button);
 	Keyboard::KeyState getKeyState(int key);
 	Mouse::MouseState getMouseState(int button);
+protected:
 	Mouse& getMouse();
 	Keyboard& getKeyboard();
+	void processEvent();
 };

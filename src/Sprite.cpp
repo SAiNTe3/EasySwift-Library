@@ -86,24 +86,26 @@ float Sprite::getRotation() const
 {
 	return m_Rotation;
 }
-void Sprite::setColor(float r, float g, float b, float a)
+void Sprite::setColor(glm::vec4 rgba_float)
 {
-	m_Color = {r, g, b, a};
+	m_Color = rgba_float;
 }
-void Sprite::setColor(int r, int g, int b, int a)
+void Sprite::setColor(glm::uvec4 rgba_int)
 {
-	m_Color.r = static_cast<float>(r) / 255;
-	m_Color.g = static_cast<float>(g) / 255;
-	m_Color.b = static_cast<float>(b) / 255;
-	m_Color.a = static_cast<float>(a) / 255;
+	m_Color = {
+		static_cast<float>(rgba_int.r) / 255.f,
+		static_cast<float>(rgba_int.g) / 255.f,
+		static_cast<float>(rgba_int.b) / 255.f,
+		static_cast<float>(rgba_int.a) / 255.f,
+	};
 }
 glm::vec4 Sprite::getColor() const
 {
 	return m_Color;
 }
-void Sprite::setScale(float ax, float ay)
+void Sprite::setScale(glm::vec2 scale)
 {
-	m_Scale = {ax, ay};
+	m_Scale = scale;
 }
 glm::vec2 Sprite::getScale() const
 {
@@ -123,11 +125,33 @@ glm::vec2 Sprite::getOrigin() const
 }
 glm::vec2 Sprite::getGlobalSize()
 {
-	return m_Size * m_Scale;
+	return m_Size * m_Scale*m_RectScale;
 }
 void Sprite::move(float x, float y)
 {
 	m_Position += glm::vec2{x, y};
+}
+void Sprite::setTextureRect(glm::vec2 pos, glm::vec2 size)
+{
+	float textureWidth = static_cast<float>(m_Texture->getWidth());
+	float textureHeight = static_cast<float>(m_Texture->getHeight());
+
+	float u1 = pos.x / textureWidth;
+	float v1 = pos.y / textureHeight;
+	float u2 = (pos.x + size.x) / textureWidth;
+	float v2 = (pos.y + size.y) / textureHeight;
+
+	float vertices[] = {
+		-0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 0.0f, u1, v1,
+		 0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 0.0f, u2, v1,
+		-0.5f,  0.5f, 0.0f, 0.0f, 0.0f, 0.0f, u1, v2,
+		 0.5f,  0.5f, 0.0f, 0.0f, 0.0f, 0.0f, u2, v2
+	};
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
+	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	m_RectScale = { u2 - u1,v2 - v1 };
 }
 void Sprite::draw(float right, float top)
 {
@@ -140,7 +164,7 @@ void Sprite::draw(float right, float top)
 	transform = glm::translate(transform, glm::vec3(m_Origin, 0.0f));
 	transform = glm::rotate(transform, glm::radians(m_Rotation), glm::vec3(0.0f, 0.0f, 1.0f));
 	transform = glm::translate(transform, glm::vec3(-m_Origin, 0.0f));
-	glm::vec2 scaledSize = m_Size * m_Scale;
+	glm::vec2 scaledSize = m_Size * m_Scale*m_RectScale;
 	transform = glm::scale(transform, glm::vec3(scaledSize.x, scaledSize.y, 1.0f));
 	m_Shader->setMat4("transform", transform);
 	m_Shader->setVec4("spriteColor", m_Color);

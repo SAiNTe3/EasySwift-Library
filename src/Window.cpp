@@ -56,7 +56,7 @@ void Window::display()
 void Window::clear()
 {
 	glfwMakeContextCurrent(m_Window);
-	glClearColor(r, g, b, a);
+	glClearColor(m_BackgroundColor.r, m_BackgroundColor.g, m_BackgroundColor.b, m_BackgroundColor.a);
 	glClear(GL_COLOR_BUFFER_BIT);
 }
 void Window::pollEvents(Event& e)
@@ -80,47 +80,38 @@ void Window::hideWindow()
 {
 	glfwHideWindow(this->m_Window);
 }
-void Window::setBackgroundColor(float r, float g, float b, float a)
+void Window::setBackgroundColor(glm::vec4 rgba_float)
 {
-	this->r = r;
-	this->g = g;
-	this->b = b;
-	this->a = a;
+	m_BackgroundColor = rgba_float;
 }
-void Window::setBackgroundColor(int r, int g, int b, int a)
+void Window::setBackgroundColor(glm::uvec4 rgba_int)
 {
-	this->r = static_cast<float>(r) / 255;
-	this->g = static_cast<float>(g) / 255;
-	this->b = static_cast<float>(b) / 255;
-	this->a = static_cast<float>(a) / 255;
+	m_BackgroundColor = { 
+		static_cast<float>(rgba_int.r) / 255.f,
+		static_cast<float>(rgba_int.g) / 255.f,
+		static_cast<float>(rgba_int.b) / 255.f,
+		static_cast<float>(rgba_int.a) / 255.f
+	};
 }
-void Window::setWindowSize(int width, int height)
+void Window::setWindowSize(glm::vec2 size)
 {
-	glfwSetWindowSize(this->m_Window, width, height);
+	glfwSetWindowSize(this->m_Window, size.x, size.y);
 }
-void Window::getWindowSize(int& width, int& height)
+glm::ivec2 Window::getWindowSize()
 {
-	glfwGetWindowSize(this->m_Window, &width, &height);
+	glm::ivec2 size = { 0,0 };
+	glfwGetWindowSize(this->m_Window, &size.x, &size.y);
+	return size;
 }
-glm::vec2 Window::getWindowSize()
+void Window::setWindowPosition(glm::vec2 pos)
 {
-	int width, height;
-	getWindowSize(width, height);
-	return glm::vec2(width, height);
-}
-void Window::setWindowPosition(int x, int y)
-{
-	glfwSetWindowPos(this->m_Window, x, y);
-}
-void Window::getWindowPosition(int& x, int& y)
-{
-	glfwGetWindowPos(this->m_Window, &x, &y);
+	glfwSetWindowPos(this->m_Window, pos.x, pos.y);
 }
 glm::vec2 Window::getWindowPosition()
 {
-	int x, y;
-	getWindowPosition(x, y);
-	return glm::vec2(x, y);
+	glm::ivec2 pos = { 0,0 };
+	glfwGetWindowPos(this->m_Window, &pos.x, &pos.y);
+	return pos;
 }
 void Window::closeWindow()
 {
@@ -134,11 +125,9 @@ HWND Window::getWindowHandle()
 {
 	return glfwGetWin32Window(m_Window);
 }
-void Window::move(int ax, int ay)
+void Window::move(glm::vec2 offset)
 {
-	int x, y;
-	this->getWindowPosition(x, y);
-	this->setWindowPosition(ax + x, ay + y);
+	this->setWindowPosition(getWindowPosition() + offset);
 }
 void Window::setVSync(bool value)
 {
@@ -166,6 +155,15 @@ void Window::draw(Sprite& sprite)
 	int width, height;
 	glfwGetWindowSize(m_Window, &width, &height);
 	sprite.draw(static_cast<float>(width), static_cast<float>(height));
+}
+
+void Window::draw(Text& text)
+{
+	text.update();
+	for (auto& e : text.m_SpriteVector)
+	{
+		this->draw(*e);
+	}
 }
 
 void Window::Initialize(int major, int minor)
