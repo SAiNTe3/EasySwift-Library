@@ -13,14 +13,39 @@ EasySwift Library is a 2D graphics rendering library based on OpenGL, stbImage, 
 
 ## Usage
 
-### Compile and Run
+### Build Static Library By Yourself
 
-1. **Download source code**: Download source code from GitHub repository [SAiNTe3/EasySwift-Library](https://github.com/SAiNTe3/EasySwift-Library).
-2. **Compile library files**: Run the `build.bat` script, and the compiled `.lib` files will be automatically placed in the `/lib` directory.
-3. **Compile project**: If you use the command line to compile the project, you need to add dependencies and specify the library file path. For example:
+- g++:
 
 ```bash
-g++ <source file>.cpp -o <executable file> -lmultimedia -lglfw3 -lopengl32 -lgdi32 -lglad -L<library file path>
+cd src
+```
+```bash
+g++ -c glad/glad.c Audio.cpp AudioEngine.cpp Shader.cpp Sprite.cpp Sprite3D.cpp Camera.cpp Texture.cpp Keyboard.cpp Mouse.cpp Window.cpp Clock.cpp Cursor.cpp Event.cpp CharacterMap.cpp Text.cpp BasicShape/Shape.cpp BasicShape/CircleShape.cpp -I../include -I../include/glad -I../include/stbImage -I../include/miniAudio -I../include/glm -I../include/BasicShape
+```
+```bash
+cd ..
+```
+```bash
+ar rcs lib/esl.lib src/*.o
+```
+```bash
+del src\*.o
+```
+
+- CMake:
+
+```bash
+mkdir build
+```
+```bash
+cd build
+```
+```bash
+cmake ..
+```
+```bash
+cmake --build .
 ```
 
 ## Code Example
