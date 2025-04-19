@@ -2,7 +2,7 @@
 #include "../include/Audio.hpp"
 
 Audio::Audio() = default;
-Audio::Audio(const std::string &audioPath, AudioEngine &engine)
+Audio::Audio(const std::string& audioPath, AudioEngine& engine)
 {
 	this->bindEngine(&engine);
 	this->loadFromFile(audioPath);
@@ -44,11 +44,12 @@ void Audio::stop()
 	m_PausedCurser = 0;
 	m_Paused = false;
 }
-void Audio::loadFromFile(const std::string &path)
+void Audio::loadFromFile(const std::string& path)
 {
 	m_Result = ma_sound_init_from_file(m_Engine, path.c_str(), 0, nullptr, nullptr, &m_Sound);
 	if (m_Result != MA_SUCCESS)
 	{
+		std::cout << "Can't open audio file" << std::endl;
 		return;
 	}
 	m_Initialized = true;
@@ -81,7 +82,30 @@ float Audio::getPitch() const
 {
 	return ma_sound_get_pitch(&m_Sound);
 }
-void Audio::bindEngine(AudioEngine *engine)
+void Audio::bindEngine(AudioEngine* engine)
 {
 	m_Engine = &(engine->m_Engine);
 }
+
+void Audio::setLoopInterval(ma_uint64 loopStartFrame, ma_uint64 loopEndFrame)
+{
+	ma_data_source* pDataSource = ma_sound_get_data_source(&m_Sound);
+	ma_data_source_set_loop_point_in_pcm_frames(pDataSource, loopStartFrame, loopEndFrame);
+	this->setLoop(true);
+}
+
+void Audio::setLoopInterval(double loopStartSecond, double loopEndSecond)
+{
+	ma_uint64 sampleRate = ma_engine_get_sample_rate(this->m_Engine);
+	ma_uint64 startFrame = static_cast<ma_uint64>(std::round(loopStartSecond * sampleRate));
+	ma_uint64 endFrame = static_cast<ma_uint64>(std::round(loopEndSecond * sampleRate));
+	this->setLoopInterval(startFrame, endFrame);
+}
+
+void Audio::setLoopInterval(double loopStartSecond, double loopEndSecond, ma_uint32 sampleRate)
+{
+	ma_uint64 startFrame = static_cast<ma_uint64>(std::round(loopStartSecond * sampleRate));
+	ma_uint64 endFrame = static_cast<ma_uint64>(std::round(loopEndSecond * sampleRate));
+	this->setLoopInterval(startFrame, endFrame);
+}
+

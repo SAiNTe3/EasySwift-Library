@@ -33,4 +33,8 @@ public:
 	glm::vec2 getScale() const;
 	float getRotation() const;
 	void setCharacterSpace(float space);
+	void setColor(glm::vec4 rgba);
+	void setColor(glm::uvec4 rgba);
+	void setColor(size_t index, glm::vec4 rgba);
+	void setColor(size_t index, glm::uvec4 rgba);
 };

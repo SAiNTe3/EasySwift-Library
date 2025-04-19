@@ -2,16 +2,15 @@
 #include <iostream>
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
-#include "glad/glad.h"
-#include "GLFW/glfw3.h"
-#define GLFW_EXPOSE_NATIVE_WIN32
-#include "GLFW/glfw3native.h"
 #include "Sprite.hpp"
+#include "Sprite3D.hpp"
 #include "Cursor.hpp"
 #include "Event.hpp"
 #include "Text.hpp"
+#include "Shape.hpp"
 #include <chrono>
 #include <thread>
+#include <vector>
 typedef unsigned int uint;
 
 class Window
@@ -26,10 +25,8 @@ class Window
     Cursor m_Cursor;
     static void KeyEventCallback(GLFWwindow *window, int key, int scancode, int action, int modes);
     static void MouseEventCallback(GLFWwindow *window, int button, int action, int mods);
-
-
 public:
-    static void Initialize(int major, int minor);
+    static void Initialize();
     static void Terminate();
     Window(uint width, uint height, const char *title, bool visiable = true, bool resizeable = true);
     ~Window();
@@ -54,8 +51,7 @@ public:
     void setFramerateLimit(double framerate);
     void draw(Sprite &sprite);
     void draw(Text& text);
-    //Update v1.1.2
-	//Set cursor's properties
+    void draw(Shape& shape);
 	void setCursorStyle(Cursor::Style style);
 	void setCursorIcon(const char* iconPath);
 	void setCursorState(Cursor::State state);

@@ -1,3 +1,5 @@
+#include "glad/glad.h"
+#include "GLFW/glfw3.h"
 #include "../include/Keyboard.hpp"
 
 Keyboard::KeyState Keyboard::getKeyState(int key)

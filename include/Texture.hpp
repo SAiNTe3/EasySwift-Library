@@ -1,8 +1,6 @@
 #pragma once
 #include<iostream>
-#include"glad/glad.h"
-#include"GLFW/glfw3.h"
-#include "../include/stbImage/stb_image.h"
+
 typedef unsigned int uint;
 typedef unsigned char uchar;
 class Texture {
@@ -24,4 +22,5 @@ private:
 	int getHeight() const;
 	int getChannel()const;
 	friend class Sprite;
+	friend class Sprite3D;
 };

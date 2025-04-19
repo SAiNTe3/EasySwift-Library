@@ -1,8 +1,9 @@
 #pragma once
 #include <iostream>
-#include "glad/glad.h"
-#include "GLFW/glfw3.h"
-#include "../include/stbImage/stb_image.h"
+
+#include "stbImage/stb_image.h"
+struct GLFWcursor;
+struct GLFWwindow;
 class Cursor
 {
 	GLFWcursor* m_Cursor = nullptr;
@@ -10,18 +11,18 @@ class Cursor
 public:
 	enum Style
 	{
-		Arrow = GLFW_ARROW_CURSOR,
-		IBeam = GLFW_IBEAM_CURSOR,
-		Crosshair = GLFW_CROSSHAIR_CURSOR,
-		Hand = GLFW_HAND_CURSOR,
-		HResize = GLFW_HRESIZE_CURSOR,
-		VResize = GLFW_VRESIZE_CURSOR
+		Arrow = 0x00036001,
+		IBeam = 0x00036002,
+		Crosshair = 0x00036003,
+		Hand = 0x00036004,
+		HResize = 0x00036005,
+		VResize = 0x00036006
 	};
 	enum State
 	{
-		Normal = GLFW_CURSOR_NORMAL,
-		Hidden = GLFW_CURSOR_HIDDEN,
-		Disabled = GLFW_CURSOR_DISABLED
+		Normal = 0x00034001,
+		Hidden = 0x00034002,
+		Disabled = 0x00034003
 	};
 public:
 	Cursor();

@@ -1,4 +1,6 @@
-#include "../include/Mouse.hpp"
+#include "glad/glad.h"
+#include "GLFW/glfw3.h"
+#include "Mouse.hpp"
 
 Mouse::MouseState Mouse::getMouseState(int button)
 {

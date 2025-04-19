@@ -1,6 +1,9 @@
 #define STB_IMAGE_IMPLEMENTATION
-#include "../include/Texture.hpp"
 
+#include "../include/Texture.hpp"
+#include"glad/glad.h"
+#include"GLFW/glfw3.h"
+#include "stbImage/stb_image.h"
 
 Texture::Texture(const char *path)
 {

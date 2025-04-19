@@ -2,14 +2,15 @@
 
 void Text::update()
 {
-	glm::vec2 pos = { m_Pos.x, m_Pos.y};
+	glm::vec2 pos = m_Pos;
+	float angle = m_Angle / 180.f * glm::pi<float>();
+	glm::vec2 offset = glm::vec2(m_Space * cos(angle), m_Space * sin(angle));
 	for (auto& e : m_SpriteVector)
 	{
 		e->setPosition(pos);
 		e->setScale(m_Scale);
-		e->setOrigin(pos);
 		e->setRotation(m_Angle);
-		pos.x += m_Space;
+		pos += offset;
 	}
 }
 
@@ -116,4 +117,30 @@ float Text::getRotation() const
 void Text::setCharacterSpace(float space)
 {
 	m_Space = space;
+}
+
+void Text::setColor(glm::vec4 rgba)
+{
+	for (auto& e : m_SpriteVector)
+	{
+		e->setColor(rgba);
+	}
+}
+
+void Text::setColor(glm::uvec4 rgba)
+{
+	for (auto& e : m_SpriteVector)
+	{
+		e->setColor(rgba);
+	}
+}
+
+void Text::setColor(size_t index, glm::vec4 rgba)
+{
+	m_SpriteVector[index]->setColor(rgba);
+}
+
+void Text::setColor(size_t index, glm::uvec4 rgba)
+{
+	m_SpriteVector[index]->setColor(rgba);
 }

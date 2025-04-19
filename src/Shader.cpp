@@ -1,4 +1,6 @@
-#include"../include/Shader.hpp"
+#include"glad/glad.h"
+#include"GLFW/glfw3.h"
+#include"Shader.hpp"
 
 
 Shader::Shader(const char* vertexPath, const char* fragmentPath) {
@@ -96,4 +98,9 @@ void Shader::setMat4(const std::string& name, glm::mat4& matrix) const {
 }
 void Shader::setVec4(const std::string& name, glm::vec4& vector) const {
     glUniform4fv(glGetUniformLocation(m_Program, name.c_str()), 1, glm::value_ptr(vector));
+}
+
+void Shader::setVec2(const std::string& name, glm::vec2& vector) const
+{
+    glUniform2fv(glGetUniformLocation(m_Program, name.c_str()), 1, glm::value_ptr(vector));
 }

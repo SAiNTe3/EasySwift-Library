@@ -1,7 +1,6 @@
 #pragma once
 #include <iostream>
-#include "glad/glad.h"
-#include "GLFW/glfw3.h"
+
 #include <unordered_map>
 
 #define MOUSE_BUTTON_1 0

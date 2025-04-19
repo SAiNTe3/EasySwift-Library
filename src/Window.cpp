@@ -1,4 +1,8 @@
-#include "../include/Window.hpp"
+#include "glad/glad.h"
+#include "GLFW/glfw3.h"
+#define GLFW_EXPOSE_NATIVE_WIN32
+#include "GLFW/glfw3native.h"
+#include "Window.hpp"
 
 Window::Window(uint width, uint height, const char* title, bool visiable, bool resizeable)
 {
@@ -86,7 +90,7 @@ void Window::setBackgroundColor(glm::vec4 rgba_float)
 }
 void Window::setBackgroundColor(glm::uvec4 rgba_int)
 {
-	m_BackgroundColor = { 
+	m_BackgroundColor = {
 		static_cast<float>(rgba_int.r) / 255.f,
 		static_cast<float>(rgba_int.g) / 255.f,
 		static_cast<float>(rgba_int.b) / 255.f,
@@ -166,12 +170,25 @@ void Window::draw(Text& text)
 	}
 }
 
-void Window::Initialize(int major, int minor)
+void Window::draw(Shape& shape)
 {
+	int width, height;
+	glfwGetWindowSize(m_Window, &width, &height);
+	shape.draw(static_cast<float>(width), static_cast<float>(height));
+}
+
+void Window::Initialize()
+{
+	static bool isInitialized = false;
+	if (isInitialized)
+	{
+		return;
+	}
 	glfwInit();
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, major);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, minor);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	isInitialized = true;
 }
 void Window::Terminate()
 {
