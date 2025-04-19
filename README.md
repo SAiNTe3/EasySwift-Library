@@ -55,11 +55,12 @@ cmake --build .
 
 int main()
 {
-	Window::Initialize(4, 6);
-	Window window(800, 450, "DemoWindow", true, true);
+	Window::Initialize();
+	Window window(800, 600, "ESL Window");
 	while (window.isOpen())
 	{
-		window.pollEvents();
+		Event e;
+		window.pollEvents(e);
 		window.clear();
 		window.display();
 	}
