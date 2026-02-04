@@ -51,19 +51,20 @@ cmake --build .
 ## Code Example
 
 ```cpp
-#include "include/Window.hpp"
+#include "ESL/ESL.hpp"
+#include "ESL/Window.hpp"
 
 int main()
 {
-	Window::Initialize();
+	esl::Initialize();
 	Window window(800, 600, "ESL Window");
 	while (window.isOpen())
 	{
-		Event e;
+		esl::Event e;
 		window.pollEvents(e);
 		window.clear();
 		window.display();
 	}
-	Window::Terminate();
+	esl::Terminate();
 }
 ```
